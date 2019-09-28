@@ -1,0 +1,24 @@
+
+[spotify]
+command=python ~/.config/i3blocks/spotify.py
+interval=1
+
+[wifi]
+command=python ~/.config/i3blocks/wifi.py
+interval=1
+
+[battery]
+command=python ~/.config/i3blocks/batt.py
+interval=1
+
+[memory]
+command=python ~/.config/i3blocks/mem.py
+interval=1
+
+[volume]
+command=python ~/.config/i3blocks/volume.py
+interval=repeat
+
+[time]
+command=date +%a\ %d-%m-%y\ %H:%M:%S
+interval=1
