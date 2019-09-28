@@ -18,3 +18,6 @@ symlink "i3blocks/spotify.py" ".config/i3blocks/spotify.py"
 symlink "i3blocks/volume.py" ".config/i3blocks/volume.py"
 symlink "i3blocks/wifi.py" ".config/i3blocks/wifi.py"
 symlink "i3blocks/config" ".config/i3blocks/config"
+
+mkdir -p "$HOME/.config/i3"
+symlink "i3/config" ".config/i3/config"
