@@ -11,6 +11,10 @@ interval=1
 command=python ~/.config/i3blocks/batt.py
 interval=1
 
+[cpu]
+command=python ~/.config/i3blocks/cpu.py
+interval=1
+
 [memory]
 command=python ~/.config/i3blocks/mem.py
 interval=1
