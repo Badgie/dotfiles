@@ -1,7 +1,7 @@
 import subprocess
 import re
 
-regex = r'[0-9]+.[0-9]+'
+regex = r'\d+\.\d+'
 
 ps = subprocess.Popen(['upower', '-i', '/org/freedesktop/UPower/devices/battery_BAT0'], stdout=subprocess.PIPE)
 status = subprocess.run(['grep', 'energy'], stdin=ps.stdout, stdout=subprocess.PIPE).stdout.decode('utf-8')
