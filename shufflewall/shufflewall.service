@@ -1,0 +1,14 @@
+# shufflewall.service
+
+[Unit]
+Description=Change lock screen image for betterlockscreen periodically
+
+[Service]
+User=badgy
+Type=simple
+ExecStart=betterlockscreen -u /home/badgy/scripts/lock/wp/
+Environment="DISPLAY=:0"
+Environment="XAUTHORITY=/home/badgy/.Xauthority"
+
+[Install]
+RequiredBy=default.target

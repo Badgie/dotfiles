@@ -5,6 +5,12 @@ symlink() {
     ln -s "$(realpath ./"$1")" "$HOME/$2"
 }
 
+sys_symlink() {
+    printf "Symlinking '%s', to path '%s'\n" "repo/$1" "$HOME/$2"
+    # require sudo for file system symlinks
+    sudo ln -s "$(realpath ./"$1")" "$2"
+}
+
 symlink "betterlockscreen/betterlockscreenrc" ".config/betterlockscreenrc"
 
 mkdir -p "$HOME/scripts/lock"
@@ -22,3 +28,6 @@ symlink "i3blocks/config" ".config/i3blocks/config"
 
 mkdir -p "$HOME/.config/i3"
 symlink "i3/config" ".config/i3/config"
+
+sys_symlink "shufflewall/shufflewall.service" "/etc/systemd/system/shufflewall.service"
+sys_symlink "shufflewall/shufflewall.timer" "/etc/systemd/system/shufflewall.timer"

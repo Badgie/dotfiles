@@ -1,0 +1,10 @@
+# shufflewall.timer
+
+[Unit]
+Description=Run shufflewall on timer
+
+[Timer]
+OnUnitActiveSec=60min
+
+[Install]
+WantedBy=shufflewall.service
