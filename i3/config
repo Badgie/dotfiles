@@ -168,15 +168,30 @@ bindsym $mod+r mode "resize"
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
 bar {
-        position top
+    position top
 	#status_command i3status -c ~/.config/i3/i3status.conf
 	status_command i3blocks -c ~/.config/i3blocks/config
+    #i3bar_command i3bar --transparency
+    colors {
+        background #1c2f39
+
+        focused_workspace #162e3a #275168 #ffffff
+    }
 }
 
 #####################################
 #           custom mafks            #
 #####################################
 
+#color setup
+# class                 border  backgr. text    indicator child_border
+client.focused          #223c49 #1c2f39 #ffffff #2e9ef4   #285577
+client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
+client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.urgent           #2f343a #900000 #ffffff #900000   #900000
+client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
+
+client.background       #ffffff
 
 #disable touchpad
 exec --no-startup-id xinput disable "SynPS/2 Synaptics TouchPad"
