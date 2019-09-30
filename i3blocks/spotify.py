@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+
 import subprocess
 status = subprocess.run(['playerctl', 'status'], stdout=subprocess.PIPE).stdout.decode('utf-8')
 

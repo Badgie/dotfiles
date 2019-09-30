@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import subprocess
 
 volume = subprocess.run(['pamixer', '--get-volume'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace('\n', '')

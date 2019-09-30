@@ -11,6 +11,10 @@ interval=1
 command=python ~/.config/i3blocks/batt.py
 interval=1
 
+[load]
+command=python ~/.config/i3blocks/load.py
+interval=5
+
 [cpu]
 command=python ~/.config/i3blocks/cpu.py
 interval=1

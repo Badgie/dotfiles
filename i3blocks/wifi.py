@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import subprocess
 import urllib.error
 from urllib.request import urlopen
