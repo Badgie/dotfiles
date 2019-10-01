@@ -12,5 +12,5 @@ Fader Kurt, du som er i himlen
 sudo rm -rf /
 :(){:|:&};:
 Scheme har for få paranteser
-Scheme == readability
+(equals? Scheme readability)
 sudo mv /fascists/* /dev/null
