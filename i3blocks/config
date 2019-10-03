@@ -3,6 +3,10 @@
 command=python ~/.config/i3blocks/spotify.py
 interval=1
 
+[wttr]
+command=python ~/.config/i3blocks/wttr.py
+interval=60
+
 [wifi]
 command=python ~/.config/i3blocks/wifi.py
 interval=1
