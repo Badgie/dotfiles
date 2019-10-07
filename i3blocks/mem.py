@@ -3,6 +3,8 @@
 import subprocess
 import re
 
+mem = 'MEM:'
+
 ps = subprocess.Popen(['free', '--mega'], stdout=subprocess.PIPE)
 mem_status = subprocess.run(['grep', 'Mem'], stdin=ps.stdout, stdout=subprocess.PIPE).stdout.decode('utf-8')
 
@@ -14,6 +16,6 @@ available = f'{round(int(mem_list[6]) / 1000, 1)}G' if int(mem_list[6]) > 1000 e
 
 # if available is formatted in gigs, no worries
 if 'G' in available:
-    print(f'MEM: {used} ~ {available}')
+    print(f'{mem} {used} ~ {available}')
 else:
-    print(f'MEM: HEAVY LOAD: {used} ~ {available}')
+    print(f'{mem} HEAVY LOAD: {used} ~ {available}')
