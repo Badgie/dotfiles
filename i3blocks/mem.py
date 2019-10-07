@@ -9,9 +9,11 @@ mem_status = subprocess.run(['grep', 'Mem'], stdin=ps.stdout, stdout=subprocess.
 mem_list = re.split(r'[^0-9]+', mem_status)
 
 # ['', total, used, free, shared, buff/cache, available, '']
-used = round(int(mem_list[2]) / 1000, 1)
-if int(mem_list[6]) < 1000:
-    print(f'MEM: HEAVY LOAD: {used}G ; {mem_list[6]}M')
+used = f'{round(int(mem_list[2]) / 1000, 1)}G' if int(mem_list[2]) > 1000 else f'{mem_list[2]}M'
+available = f'{round(int(mem_list[6]) / 1000, 1)}G' if int(mem_list[6]) > 1000 else f'{mem_list[6]}M'
+
+# if available is formatted in gigs, no worries
+if 'G' in available:
+    print(f'MEM: {used} ~ {available}')
 else:
-    available = round(int(mem_list[6]) / 1000, 1)
-    print(f'MEM: {used}G ; {available}G')
+    print(f'MEM: HEAVY LOAD: {used} ~ {available}')
