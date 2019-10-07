@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import subprocess
-status = subprocess.run(['playerctl', 'status'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+status = subprocess.run(['playerctl', '--player=spotify', 'status'], stdout=subprocess.PIPE).stdout.decode('utf-8')
 
 if 'Playing' in status:
     artist = subprocess.run(['playerctl', 'metadata', 'xesam:artist'], stdout=subprocess.PIPE).stdout.decode('utf-8').replace('\n', '')
