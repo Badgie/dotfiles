@@ -8,26 +8,32 @@ command=python ~/.config/i3blocks/wttr.py
 interval=60
 
 [wifi]
+label=w
 command=python ~/.config/i3blocks/wifi.py
 interval=1
 
 [battery]
+label=BAT
 command=python ~/.config/i3blocks/batt.py
 interval=1
 
 [load]
+label=LOAD
 command=python ~/.config/i3blocks/load.py
 interval=5
 
 [cpu]
+label=CPU
 command=python ~/.config/i3blocks/cpu.py
 interval=1
 
 [memory]
+label=MEM
 command=python ~/.config/i3blocks/mem.py
 interval=1
 
 [volume]
+label=VOL
 command=python ~/.config/i3blocks/volume.py
 interval=repeat
 
