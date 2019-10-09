@@ -14,4 +14,4 @@ for x in status_list:
 
 core_temps = core_temps.strip(' ~ ')
 
-print(f'CPU: {core_temps}')
+print(f' {core_temps}')
