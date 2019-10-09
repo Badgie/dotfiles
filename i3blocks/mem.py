@@ -2,8 +2,7 @@
 
 import subprocess
 import re
-
-mem = 'MEM:'
+import os
 
 ps = subprocess.Popen(['free', '--mega'], stdout=subprocess.PIPE)
 mem_status = subprocess.run(['grep', 'Mem'], stdin=ps.stdout, stdout=subprocess.PIPE).stdout.decode('utf-8')
@@ -16,6 +15,14 @@ available = f'{round(int(mem_list[6]) / 1000, 1)}G' if int(mem_list[6]) > 1000 e
 
 # if available is formatted in gigs, no worries
 if 'G' in available:
-    print(f'{mem} {used} ~ {available}')
+    print(f' {used} ~ {available}')
 else:
-    print(f'{mem} HEAVY LOAD: {used} ~ {available}')
+    '''
+    format block with red text in case of heavy mem load
+    i3blocks reads three script output lines; full text, short text, and color, therefore second line is
+    necessary for i3blocks to recognise the color on the third line
+    color code needs to be enclosed in double quotes
+    '''
+    os.system(f'echo " HEAVY LOAD: {used} "~" {available}"')
+    os.system(f'echo ')
+    os.system(f'echo "#FA5858"')
