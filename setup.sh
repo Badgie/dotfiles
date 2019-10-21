@@ -25,6 +25,10 @@ symlink "i3blocks/volume.py" ".config/i3blocks/volume.py"
 symlink "i3blocks/wifi.py" ".config/i3blocks/wifi.py"
 symlink "i3blocks/cpu.py" ".config/i3blocks/cpu.py"
 symlink "i3blocks/load.py" ".config/i3blocks/load.py"
+mkdir -p "$HOME/.config/i3blocks/dmi-weather"
+symlink "i3blocks/dmi-weather/weather.py" ".config/i3blocks/dmi-weather/weather.py"
+symlink "i3blocks/dmi-weather/cities" ".config/i3blocks/dmi-weather/cities"
+
 symlink "i3blocks/wttr.py" ".config/i3blocks/wttr.py"
 symlink "i3blocks/config" ".config/i3blocks/config"
 

@@ -3,9 +3,9 @@
 command=python ~/.config/i3blocks/spotify.py
 interval=1
 
-[wttr]
-command=python ~/.config/i3blocks/wttr.py
-interval=60
+[weather]
+command=python ~/.config/i3blocks/dmi-weather/weather.py
+interval=300
 
 [wifi]
 label=w
