@@ -219,3 +219,13 @@ bindsym XF86Launch1 exec --no-startup-id python /home/badgy/scripts/lock/lock.py
 
 #startup dunst for notifications
 exec --no-startup-id dunst
+
+# assign applications to workspaces
+assign [class=^discord$] 1
+assign [class=^Slack$] 2
+assign [class=^Spotify$] 3
+
+# startup default applications
+exec --no-startup-id i3-msg 'workspace 1; exec discord'
+exec --no-startup-id i3-msg 'workspace 2; exec slack'
+exec --no-startup-id i3-msg 'workspace 3; exec spotify'
