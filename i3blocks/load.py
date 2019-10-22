@@ -8,15 +8,23 @@ def print_result(load, color):
     os.system(f'echo "{color}"')
 
 
-load_file = open('/proc/loadavg')
-load_list = load_file.read().strip('\n').split(' ')
-load_file.close()
+def get_load_status() -> list:
+    load_file = open('/proc/loadavg')
+    load_list = load_file.read().strip('\n').split(' ')
+    load_file.close()
+    return load_list
 
-# [1 min, 5 min, 10 min]
-if float(load_list[0]) > 2.5:
-    if float(load_list[0]) > 5.0:
-        print_result(load=load_list[0], color='#FA5858')
+
+def print_line(status: list):
+    # [1 min, 5 min, 10 min]
+    if float(status[0]) > 2.5:
+        if float(status[0]) > 5.0:
+            print_result(load=status[0], color='#FA5858')
+        else:
+            print_result(load=status[0], color='#F4FA58')
     else:
-        print_result(load=load_list[0], color='#F4FA58')
-else:
-    print(f' {load_list[0]}')
+        print(f' {status[0]}')
+
+
+if __name__ == "__main__":
+    print_line(get_load_status())
