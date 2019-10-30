@@ -17,8 +17,8 @@ def get_load_status() -> list:
 
 def print_line(status: list):
     # [1 min, 5 min, 10 min]
-    if float(status[0]) > 2.5:
-        if float(status[0]) > 5.0:
+    if float(status[0]) > 5.0:
+        if float(status[0]) > 10.0:
             print_result(load=status[0], color='#FA5858')
         else:
             print_result(load=status[0], color='#F4FA58')
