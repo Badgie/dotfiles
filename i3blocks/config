@@ -37,6 +37,10 @@ label=VOL
 command=python ~/.config/i3blocks/volume.py
 interval=repeat
 
+[kernel]
+command=uname -r
+interval=once
+
 [time]
 command=date +%a\ %d-%m-%y\ %H:%M:%S
 interval=1
