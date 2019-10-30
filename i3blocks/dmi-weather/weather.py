@@ -5,7 +5,6 @@ from urllib import request
 from urllib.error import URLError
 from pathlib import Path
 
-default_path = f'{Path.home()}/.config/i3blocks/dmi-weather/scrloc.py'
 dmi_url = 'https://www.dmi.dk/NinJo2DmiDk/ninjo2dmidk?cmd=llj&id='
 ip_url = 'https://ipinfo.io/'
 
@@ -13,13 +12,14 @@ ip_url = 'https://ipinfo.io/'
 try:
     token = open(f'{Path.home()}/.config/i3blocks/dmi-weather/token').readline().strip('\n')
     ip_url += f'?token={token}'
-except:
+except IOError:
+    print("No token file found, continuing without")
     pass
 
 # Try opening on config-path, if not found, try pwd
 try:
     file = open(f'{Path.home()}/.config/i3blocks/dmi-weather/cities')
-except:
+except IOError:
     file = open("./cities")
 
 cities = file.read().split('\n')
@@ -29,10 +29,10 @@ file.close()
 # get device location json through ipinfo
 def get_loc() -> str:
     try:
-        response = request.urlopen(ip_url, timeout=5).read().decode('utf-8')
+        return request.urlopen(ip_url, timeout=5).read().decode('utf-8')
     except URLError:
-        response = "Failed to get response"
-    return response
+        print("Failed to get location")
+        exit(1)
 
 
 # reformat city name if øæå is present and extract city id
@@ -56,19 +56,25 @@ def extract_city_id(city: str) -> int:
 
 
 def extract_city(data: str) -> int:
+    if data is None:
+        print("Error: geo location data was null")
+        exit(1)
     obj = json.loads(data)
     return extract_city_id(obj['city'])
 
 
 # retrieve weather data from dmi
 def get_weather_data(url: str) -> str:
+    response = ''
     try:
         response = request.urlopen(url, timeout=5).read().decode('utf-8')
     except URLError:
-        return "Error getting weather"
+        print("Error getting weather")
+        exit(1)
 
     if response is None:
-        return "Weather response was null"
+        print("Weather response was null")
+        exit(1)
 
     return str(response)
 
@@ -76,9 +82,9 @@ def get_weather_data(url: str) -> str:
 # reformat wind direction to english notation
 def format_wind_dir(wind: str) -> str:
     if 'V' in wind:
-        wind = wind.replace('V', 'W')
+        return wind.replace('V', 'W')
     elif 'Ã\u0098' in wind:
-        wind = wind.replace('Ã\u0098', 'E')
+        return wind.replace('Ã\u0098', 'E')
     return wind
 
 
@@ -132,6 +138,8 @@ def format_weather_desc(prec: float, icon: int) -> str:
             return 'Thunder and heavy rain'
     elif icon is 101:
         return 'Clear sky'
+    else:
+        return 'Look outside boi'
 
 
 # format output line
