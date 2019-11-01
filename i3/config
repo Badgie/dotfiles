@@ -215,7 +215,7 @@ bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86AudioPlay exec playerctl play-pause
 
 #lock screen
-bindsym XF86Launch1 exec --no-startup-id python /home/badgy/scripts/lock/lock.py
+bindsym XF86Launch1 exec --no-startup-id python ~/scripts/lock/lock.py
 
 #startup dunst for notifications
 exec --no-startup-id dunst
