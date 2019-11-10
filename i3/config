@@ -229,3 +229,6 @@ assign [class=^Spotify$] 3
 exec --no-startup-id i3-msg 'workspace 1; exec discord'
 exec --no-startup-id i3-msg 'workspace 2; exec slack'
 exec --no-startup-id i3-msg 'workspace 3; exec spotify'
+
+# bind spotisave
+bindsym Pause exec --no-startup-id python ~/.config/i3/spotisave/spotisave.py
