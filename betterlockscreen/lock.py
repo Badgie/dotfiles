@@ -3,8 +3,5 @@ import os
 import random
 from pathlib import Path
 
-lines = open(f'{Path.home()}/scripts/lock/lines')
-line = random.choice(lines.read().splitlines())
-lines.close()
-
-os.system(f'betterlockscreen -l dimblur -t \"{line}\"')
+with open(f'{Path.home()}/scripts/lock/lines') as file:
+    os.system(f'betterlockscreen -l dimblur -t \"{random.choice(file.read().splitlines())}\"')
