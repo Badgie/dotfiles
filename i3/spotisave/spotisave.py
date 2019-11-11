@@ -3,6 +3,7 @@
 import requests
 import subprocess
 import webbrowser
+import json
 from bottle import route, run, request
 from spotipy import oauth2
 from pathlib import Path
@@ -13,7 +14,8 @@ client_secret = '28147de72c3549e98b1e790f3d080b85'
 redirect_uri = f'http://localhost:{port}'
 scope = 'playlist-modify-public%20playlist-modify-private'
 cache = f'{Path.home()}/.spotisaveoauth'
-playlist_id = "783TdjdiLozExUlSFcMWE4"
+playlist_id = "your-playlist-id"
+playlist_url = f'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
 
 sp_oauth = oauth2.SpotifyOAuth(client_id, client_secret, redirect_uri, scope=scope, cache_path=cache)
 
@@ -56,12 +58,27 @@ def get_token() -> str:
         exit(1)
 
 
+def check_if_song_exists(uri: str) -> bool:
+    headers = {'Content-Type': 'application/json',
+               'Accept': 'application/json',
+               'Authorization': f'Bearer {get_token()}'}
+    response = requests.get(url=playlist_url, headers=headers)
+    tracks = json.loads(response.content.decode('utf-8'))['items']
+    for x in tracks:
+        if x['track']['uri'] == uri:
+            return True
+    return False
+
+
 def add_song():
+    uri = get_current_song_uri()
+    if check_if_song_exists(uri):
+        print('Track is already present in playlist, exiting.')
+        exit(1)
     headers = {'Content-Type': 'application/json',
                'Authorization': f'Bearer {get_token()}'}
-    params = f'uris={get_current_song_uri()}'
-    response = requests.post(f'https://api.spotify.com/v1/playlists/{playlist_id}/tracks', headers=headers,
-                             params=params)
+    params = f'uris={uri}'
+    response = requests.post(url=playlist_url, headers=headers, params=params)
     if response.status_code == 201:
         print('Successfully added song to playlist')
     elif response.status_code == 401:
