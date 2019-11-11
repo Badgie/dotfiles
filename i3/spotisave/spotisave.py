@@ -3,7 +3,6 @@
 import requests
 import subprocess
 import webbrowser
-import json
 from bottle import route, run, request
 from spotipy import oauth2
 from pathlib import Path
@@ -12,10 +11,9 @@ port = 8080
 client_id = '466a89a53359403b82df7d714030ec5f'
 client_secret = '28147de72c3549e98b1e790f3d080b85'
 redirect_uri = f'http://localhost:{port}'
-scope = 'playlist-modify-public%20playlist-modify-private'
+scope = 'user-library-modify'
 cache = f'{Path.home()}/.spotisaveoauth'
-playlist_id = "your-playlist-id"
-playlist_url = f'https://api.spotify.com/v1/playlists/{playlist_id}/tracks'
+track_url = 'https://api.spotify.com/v1/me/tracks'
 
 sp_oauth = oauth2.SpotifyOAuth(client_id, client_secret, redirect_uri, scope=scope, cache_path=cache)
 
@@ -58,37 +56,24 @@ def get_token() -> str:
         exit(1)
 
 
-def check_if_song_exists(uri: str) -> bool:
-    headers = {'Content-Type': 'application/json',
-               'Accept': 'application/json',
-               'Authorization': f'Bearer {get_token()}'}
-    response = requests.get(url=playlist_url, headers=headers)
-    tracks = json.loads(response.content.decode('utf-8'))['items']
-    for x in tracks:
-        if x['track']['uri'] == uri:
-            return True
-    return False
-
-
-def add_song():
-    uri = get_current_song_uri()
-    if check_if_song_exists(uri):
-        print('Track is already present in playlist, exiting.')
-        exit(1)
+def like_track():
+    track_id = get_current_song_uri().split(':')[2]
+    params = {'ids': track_id}
     headers = {'Content-Type': 'application/json',
                'Authorization': f'Bearer {get_token()}'}
-    params = f'uris={uri}'
-    response = requests.post(url=playlist_url, headers=headers, params=params)
-    if response.status_code == 201:
-        print('Successfully added song to playlist')
+    print('Attempting to like track...')
+    response = requests.put(url=track_url, params=params, headers=headers)
+    if response.status_code == 200:
+        print('Successfully liked track!')
     elif response.status_code == 401:
         print('OAuth token invalid, refreshing...')
         refresh_token()
-        add_song()
+        like_track()
     else:
-        print(f'Failed to add song to playlist, status code: {response.status_code}')
+        print(f'Failed to like track, status code: {response.status_code}')
+        print(f'Reason: {response.reason}')
         print(response.content.decode('utf-8'))
 
 
 if __name__ == '__main__':
-    add_song()
+    like_track()
