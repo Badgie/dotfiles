@@ -15,10 +15,11 @@ def print_line(status: list):
     # ['', total, used, free, shared, buff/cache, available, '']
     used = f'{round(int(status[2]) / 1000, 1)}G' if int(status[2]) > 1000 else f'{status[2]}M'
     available = f'{round(int(status[6]) / 1000, 1)}G' if int(status[6]) > 1000 else f'{status[6]}M'
+    cached = f'{round(int(status[5]) / 1000, 1)}G' if int(status[5]) > 1000 else f'{status[5]}M'
 
     # if available is formatted in gigs, no worries
     if 'G' in available:
-        print(f' {used} ~ {available}')
+        print(f' {used} ~ {available} (C: {cached})')
     else:
         '''
         format block with red text in case of heavy mem load
@@ -26,7 +27,7 @@ def print_line(status: list):
         necessary for i3blocks to recognise the color on the third line
         color code needs to be enclosed in double quotes
         '''
-        os.system(f'echo " HEAVY LOAD: {used} "~" {available}"')
+        os.system(f'echo " HEAVY LOAD: {used} "~" {available} (C: {cached})"')
         os.system(f'echo ')
         os.system(f'echo "#FA5858"')
 
