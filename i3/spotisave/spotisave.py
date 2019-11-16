@@ -3,9 +3,14 @@
 import requests
 import subprocess
 import webbrowser
+import argparse
+import time
 from bottle import route, run, request
 from spotipy import oauth2
 from pathlib import Path
+
+parser = argparse.ArgumentParser('like currently playing spotify track')
+parser.add_argument('-r', action='store_true', help='unlike currently playing spotify track')
 
 port = 8080
 client_id = '466a89a53359403b82df7d714030ec5f'
@@ -39,6 +44,7 @@ def index() -> str:
 
 
 def refresh_token():
+    print('OAuth token invalid, refreshing...')
     sp_oauth.refresh_access_token(sp_oauth.get_cached_token()['refresh_token'])
 
 
@@ -50,6 +56,8 @@ def get_current_song_uri() -> str:
 def get_token() -> str:
     token_info = sp_oauth.get_cached_token()
     if token_info:
+        if (time.time() + 5) > int(sp_oauth.get_cached_token()['expires_at']):
+            refresh_token()
         return sp_oauth.get_cached_token()['access_token']
     else:
         authorize()
@@ -65,15 +73,34 @@ def like_track():
     response = requests.put(url=track_url, params=params, headers=headers)
     if response.status_code == 200:
         print('Successfully liked track!')
-    elif response.status_code == 401:
-        print('OAuth token invalid, refreshing...')
-        refresh_token()
-        like_track()
     else:
         print(f'Failed to like track, status code: {response.status_code}')
         print(f'Reason: {response.reason}')
         print(response.content.decode('utf-8'))
 
 
+def unlike_track():
+    track_id = get_current_song_uri().split(':')[2]
+    params = {'ids': track_id}
+    headers = {'Content-Type': 'application/json',
+               'Authorization': f'Bearer {get_token()}'}
+    print('Attempting to unlike track...')
+    response = requests.delete(url=track_url, params=params, headers=headers)
+    if response.status_code == 200:
+        print('Successfully unliked track!')
+    else:
+        print(f'Failed to unlike track, status code: {response.status_code}')
+        print(f'Reason: {response.reason}')
+        print(response.content.decode('utf-8'))
+
+
+def parse_args():
+    args = parser.parse_args()
+    if args.r:
+        unlike_track()
+    else:
+        like_track()
+
+
 if __name__ == '__main__':
-    like_track()
+    parse_args()
