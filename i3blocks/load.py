@@ -9,10 +9,8 @@ def print_result(load, color):
 
 
 def get_load_status() -> list:
-    load_file = open('/proc/loadavg')
-    load_list = load_file.read().strip('\n').split(' ')
-    load_file.close()
-    return load_list
+    with open('/proc/loadavg', 'r') as f:
+        return f.read().strip('\n').split(' ')
 
 
 def print_line(status: list):

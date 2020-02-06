@@ -1,4 +1,10 @@
 
+[spotifyuri]
+full_text=♫
+command=playerctl --player=spotify metadata mpris:trackid | xclip -d :0 -selection "clipboard"
+
+separator=false
+
 [spotify]
 command=python ~/.config/i3blocks/spotify.py
 interval=1
@@ -10,6 +16,11 @@ interval=300
 [wifi]
 label=w
 command=python ~/.config/i3blocks/wifi.py
+interval=1
+
+[disk]
+label=DSK
+command=python ~/.config/i3blocks/disk.py
 interval=1
 
 [battery]
