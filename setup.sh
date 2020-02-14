@@ -17,6 +17,8 @@ mkdir -p "$HOME/scripts/lock"
 symlink "betterlockscreen/lock.py" "scripts/lock/lock.py"
 symlink "betterlockscreen/lines" "scripts/lock/lines"
 
+symlink "monitor/monitor.py" "scripts/monitor.py"
+
 mkdir -p "$HOME/.config/i3blocks"
 symlink "i3blocks/batt.py" ".config/i3blocks/batt.py"
 symlink "i3blocks/mem.py" ".config/i3blocks/mem.py"
