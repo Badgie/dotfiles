@@ -32,7 +32,7 @@ exec setxkbmap -layout dk
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec termite
+bindsym $mod+Return exec konsole --profile yeet
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -230,3 +230,10 @@ exec --no-startup-id i3-msg 'workspace 1; exec discord'
 
 # bind spotisave
 bindsym Pause exec --no-startup-id spotirec -s
+
+exec --no-startup-id umonitor --listen
+
+# set bg
+exec --no-startup-id feh --bg-scale ~/wp/Tw7YjV9.jpg
+
+bindsym XF86Display exec --no-startup-id "umonitor -a && feh --bg-scale ~/wp/Tw7YjV9.jpg"
