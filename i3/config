@@ -218,7 +218,7 @@ bindsym XF86AudioPlay exec playerctl play-pause
 bindsym XF86Launch1 exec --no-startup-id python ~/scripts/lock/lock.py
 
 #startup dunst for notifications
-exec --no-startup-id dunst
+exec --no-startup-id dunst -config $HOME/.config/dunst/dunstrc
 
 # assign applications to workspaces
 assign [class=^discord$] 1
@@ -234,6 +234,6 @@ bindsym Pause exec --no-startup-id spotirec -s
 exec --no-startup-id umonitor --listen
 
 # set bg
-exec --no-startup-id feh --bg-scale ~/wp/Tw7YjV9.jpg
+exec --no-startup-id feh --bg-scale ~/wp/goosewin.png
 
 bindsym XF86Display exec --no-startup-id "umonitor -a && feh --bg-scale ~/wp/Tw7YjV9.jpg"
